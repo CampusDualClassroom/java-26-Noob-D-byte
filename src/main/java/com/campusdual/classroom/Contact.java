@@ -6,44 +6,20 @@ import java.text.Normalizer;
 
 
 public class Contact implements ICallActions {
-
+    //Properties
     private String name;
     private String surnames;
     private String phone;
     private String code;
 
-
+    //Constructor
     public Contact(String name, String surnames, String phone) {
         this.name = name;
         this.surnames = surnames;
         this.phone = phone;
         this.code = generateCode(this.name, this.surnames);
     }
-
-    private String generateCode(String name, String surnames) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(normalizeString(name).charAt(0));
-        String[] splitedSurnames = normalizeString(surnames).split("\\s+");
-
-        if (splitedSurnames.length == 1) {
-            sb.append(splitedSurnames[0]);
-        } else {
-            sb.append(splitedSurnames[0].charAt(0));
-            for (int i = 1; i < splitedSurnames.length; i++) {
-                sb.append(splitedSurnames[i]);
-            }
-        }
-        return sb.toString();
-    }
-
-    private String normalizeString(String string) {
-        return Normalizer.normalize(string, Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}", "").toLowerCase();
-    }
-
-    private void updateDefaultPhone() {
-        this.setPhone(Utils.string("Introduzca el nuevo número principal: "));
-    }
-
+//Getters e seetters
 
     public String getName() {
         return this.name;
@@ -77,7 +53,7 @@ public class Contact implements ICallActions {
         this.code = code;
     }
 
-
+    //Métodos suscritos da ICallActions
     @Override
     public void callMyNumber() {
         System.out.println(this.getName() + " " + this.getSurnames() + " se está llamando a sí mismo al número " + this.getPhone());
@@ -101,7 +77,7 @@ public class Contact implements ICallActions {
     public String toString() {
         return "Código: " + this.getCode() + " " + " Nombre: " + this.getName() + " Apellidos: " + this.getSurnames() + " Teléfono: " + this.getPhone();
     }
-
+//Outros métodos públicos
     public void showContactMenu() {
         int option;
 
@@ -126,6 +102,31 @@ public class Contact implements ICallActions {
                     System.out.println("La opción seleccionada no es válida. ");
             }
         } while (option != 0);
+    }
+
+//Métodos privados
+    private String generateCode(String name, String surnames) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(normalizeString(name).charAt(0));
+        String[] splitedSurnames = normalizeString(surnames).split("\\s+");
+
+        if (splitedSurnames.length == 1) {
+            sb.append(splitedSurnames[0]);
+        } else {
+            sb.append(splitedSurnames[0].charAt(0));
+            for (int i = 1; i < splitedSurnames.length; i++) {
+                sb.append(splitedSurnames[i]);
+            }
+        }
+        return sb.toString();
+    }
+
+    private String normalizeString(String string) {
+        return Normalizer.normalize(string, Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}", "").toLowerCase();
+    }
+
+    private void updateDefaultPhone() {
+        this.setPhone(Utils.string("Introduzca el nuevo número principal: "));
     }
 
     private String generateContactMenuOptions() {

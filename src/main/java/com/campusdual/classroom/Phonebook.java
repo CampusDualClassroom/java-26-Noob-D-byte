@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Phonebook {
-    Map<String, Contact> Contact;
+    Map<String, Contact> contacts;
 
     public Phonebook() {
-        this.Contact = new HashMap<>();
+        this.contacts = new HashMap<>();
     }
 
     public Map<String, Contact> getData() {
-        return this.Contact;
+        return this.contacts;
     }
 
     public void addContact() {
@@ -23,7 +23,7 @@ public class Phonebook {
 
         Contact c = new Contact(name, surnames, teléfono);
 
-        if (this.Contact.get(c.getCode()) != null) {
+        if (this.contacts.get(c.getCode()) != null) {
             System.out.println("El contacto ya existe ");
         } else if (this.addContact(c) != null) {
             System.out.println("Contacto agregado correctamente " + c.getCode());
@@ -33,8 +33,8 @@ public class Phonebook {
     }
 
     public Contact addContact(Contact c) {
-        this.Contact.put(c.getCode(), c);
-        return this.Contact.get(c.getCode());
+        this.contacts.put(c.getCode(), c);
+        return this.contacts.get(c.getCode());
     }
 
     public void deleteContact() {
@@ -42,7 +42,7 @@ public class Phonebook {
     }
 
     public void deleteContact(String code) {
-        this.Contact.remove(code);
+        this.contacts.remove(code);
     }
 
     public void selectContact() {
@@ -56,11 +56,11 @@ public class Phonebook {
     }
 
     public void showPhonebook() {
-        if (this.Contact.isEmpty()) {
+        if (this.contacts.isEmpty()) {
             System.out.println("El directorio telefónico esta vacío ");
         } else {
             System.out.println("## Contactos en la agenda  ##");
-            for (Map.Entry<String, Contact> entry : Contact.entrySet()) {
+            for (Map.Entry<String, Contact> entry : contacts.entrySet()) {
                 System.out.println("\t" + entry.getValue().toString());
             }
         }
